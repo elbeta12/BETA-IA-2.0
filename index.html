@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BETA.AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #chat {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        #input {
+            width: calc(100% - 100px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            outline: none;
+            background: #333;
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+        }
+
+        #sendButton {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        #sendButton:hover {
+            background: #0056b3;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        ul {
+            margin: 5px 0 10px 20px;
+            padding: 0;
+            list-style-type: disc;
+        }
+
+        /* Estrellas */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Generar estrellas */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="stars">
+    <div class="star" style="top: 20%; left: 30%; width: 2px; height: 2px;"></div>
+    <div class="star" style="top: 10%; left: 80%; width: 3px; height: 3px;"></div>
+    <div class="star" style="top: 50%; left: 50%; width: 1.5px; height: 1.5px;"></div>
+    <div class="star" style="top: 70%; left: 20%; width: 2.5px; height: 2.5px;"></div>
+    <div class="star" style="top: 40%; left: 90%; width: 1px; height: 1px;"></div>
+    <div class="star" style="top: 80%; left: 10%; width: 3px; height: 3px;"></div>
+    <div class="star" style="top: 30%; left: 60%; width: 1.8px; height: 1.8px;"></div>
+    <div class="star" style="top: 90%; left: 40%; width: 2px; height: 2px;"></div>
+</div>
+
+<h1>BETA.AI v1.0</h1>
+<div id="chat"></div>
+<div style="display: flex; margin-top: 10px;">
+    <input type="text" id="input" placeholder="Escribe un mensaje...">
+    <button id="sendButton">Enviar</button>
+</div>
+
+<script>
+    const tasks = [
+        'ARTISTIC',
+        'lectoescritura',
+        'PARA MÁS INFORMACIÓN CONSULTA EN EL WHATSAPP DE BETA.AI.'
+    ];
+
+    const greetings = [
+        '¡Hola! ¿En qué puedo ayudarte hoy?',
+        '¡Hola! Estoy aquí para ayudarte.',
+        '¡Hola! ¿Cómo puedo asistirte hoy?'
+    ];
+
+    function processInput(userText) {
+        const chat = document.getElementById('chat');
+        chat.innerHTML += `<p><strong>Tú:</strong> ${userText}</p>`;
+        const lowerText = userText.toLowerCase();
+
+        if (lowerText === 'hola') {
+            const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+            chat.innerHTML += `<p><strong>Chatbot:</strong> ${greeting}</p>`;
+        } else if (userText === '/tareas') {
+            const taskList = tasks.map(task => `<li>${task}</li>`).join('');
+            chat.innerHTML += `<p><strong>Chatbot:</strong> Aquí tienes tu lista de tareas:</p>`;
+            chat.innerHTML += `<ul>${taskList}</ul>`;
+        } else if (lowerText === 'qué eres') {
+            chat.innerHTML += `<p><strong>Chatbot:</strong> Soy una IA en desarrollo que está aquí para ayudarte.</p>`;
+        } else if (lowerText === 'cómo estás') {
+            chat.innerHTML += `<p><strong>Chatbot:</strong> ¡Estoy aquí para ayudarte! ¿Y tú?</p>`;
+        } else if (lowerText === 'cuéntame un chiste') {
+            chat.innerHTML += `<p><strong>Chatbot:</strong> ¿Por qué los pájaros no usan Facebook? Porque ya tienen Twitter.</p>`;
+        } else if (lowerText === 'dame una cita') {
+            chat.innerHTML += `<p><strong>Chatbot:</strong> "El único modo de hacer un gran trabajo es amar lo que haces." - Steve Jobs</p>`;
+        } else if (lowerText === 'soporte') {
+            chat.innerHTML += `<p><strong>Chatbot:</strong> Si necesitas soporte, puedes unirte a nuestro grupo de WhatsApp: <a href="https://chat.whatsapp.com/EKPVpoGhVlHJKpZua9sTtT" style="color: #007BFF;">Grupo de Soporte</a></p>`;
+        } else {
+            chat.innerHTML += `<p><strong>Chatbot:</strong> No entiendo ese comando. Intenta con 'hola' o '/tareas'.</p>`;
+        }
+
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    document.getElementById('sendButton').addEventListener('click', function() {
+        const input = document.getElementById('input');
+        const userText = input.value.trim();
+
+        if (userText) {
+            processInput(userText);
+            input.value = ''; 
+        } else {
+            alert('Por favor, escribe un mensaje.');
+        }
+    });
+
+    document.getElementById('input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            document.getElementById('sendButton').click();
+        }
+    });
+</script>
+
+</body>
+</html>
